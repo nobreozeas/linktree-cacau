@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cacau Show • Links</title>
+    <link rel="icon" type="image/png" href="./images/logo.png" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg: #f4f1ed;
+            --card: #ffffff;
+            --text: #3b2b20;
+            --subtext: #7a6e64;
+            --primary: #c7a16a;
+            --primary-hover: #b58f56;
+            --radius: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            padding: 38px 16px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 430px;
+            text-align: center;
+        }
+
+        .imagem-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .div-imagem-box img{
+            width: 150px;
+            height: 150px;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+        /* TÍTULOS */
+        .title {
+            font-weight: 600;
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--subtext);
+            margin-bottom: 24px;
+        }
+
+        /* BOTÕES */
+        .btn {
+            display: block;
+            text-decoration: none;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border-radius: var(--radius);
+            font-size: 15px;
+            font-weight: 500;
+            border: 1px solid #e7e2dc;
+            background: var(--card);
+            color: var(--text);
+            transition: 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        small {
+            font-size: 11px;
+            margin-top: 4px;
+            color: var(--subtext);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        .footer {
+            margin-top: 28px;
+            font-size: 13px;
+            color: var(--subtext);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(120%);
+            background: #3b2b20;
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            opacity: 0;
+            transition: 0.25s;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="imagem-box">
+            <div class="div-imagem-box">
+                <img src="./images/logo.png" alt="Cacau Show Logo" />
+            </div>
+        </div>
+
+        <div class="title">Cacau Show • Plácido de Castro</div>
+        <div class="subtitle">Container em frente à rodoviária • Delivery diário</div>
+
+        <!-- Links -->
+
+        <a class="btn" href="./chocofriday.html" target="_blank">🔥 ChocoFriday - Ofertas Imperdíveis 🍫</a>
+
+
+        <a class="btn" target="_blank"
+            href="https://wa.me/5568992268662?text=Olá,%20gostaria%20de%20fazer%20meu%20pedido!%20">
+            Fazer Pedido no WhatsApp (Plácido de Castro)
+            <small>Entregas todos os dias</small>
+        </a>
+
+        <a class="btn " target="_blank"
+            href="https://wa.me/5568992268662?text=Olá,%20sou%20de%20Acrelândia%20e%20gostaria%20de%20fazer%20o%20meu%20pedido.%20">
+            Fazer Pedido no WhatsApp (Acrelândia)
+            <small>Entregas todos os dias às 15:30</small>
+            
+        </a>
+
+        <a class="btn " target="_blank"
+            href="https://wa.me/5568999335686?text=Olá,%20sou%20de%20Rio%20Branco%20e%20gostaria%20de%20fazer%20o%20meu%20pedido.%20">
+            Fazer Pedido no WhatsApp (Rio Branco)
+            <small>Entregas toda Segunda-Feira</small>
+        </a>
+
+        
+
+        <a class="btn  btn-primary" target="_blank"
+            href="https://wa.me/5568999335686?text=Olá,%20gostaria%20de%20fazer%20um%20pedido%20para%20minha%20empresa!%20">
+            Cacau Show para Empresas
+        </a>
+
+
+
+
+        <a class="btn" href="./catalogo.pdf" target="_blank">
+            Catálogo Natal 2025
+        </a>
+
+        <a class="btn" href="https://maps.app.goo.gl/FtKHdEn1t8Jcw9q96" target="_blank">
+            Como Chegar
+        </a>
+
+
+
+        <div class="footer">
+            Horários: Seg-Sex 09h–18h30 • Sáb 14h–19h00 • Dom 15h–19:30h
+        </div>
+
+    </div>
+
+</body>
+
+</html>
