@@ -754,6 +754,37 @@
                     <input type="text" id="clientCidade" class="form-input" placeholder="Cidade *" required>
                 </div>
 
+                <!-- CACAU LOVER -->
+                <div class="payment-section">
+                    <h3>🍫 Programa Cacau Lover</h3>
+                    <div class="payment-options">
+                        <div class="payment-option">
+                            <input type="radio" name="cacauLover" id="jaSouLover" value="ja">
+                            <label for="jaSouLover">❤️ Já sou Cacau Lover</label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" name="cacauLover" id="queroSerLover" value="quero">
+                            <label for="queroSerLover">⭐ Quero ser Cacau Lover</label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" name="cacauLover" id="naoQueroLover" value="nao" checked>
+                            <label for="naoQueroLover">🚫 Não quero aproveitar os benefícios</label>
+                        </div>
+                    </div>
+                    
+                    <!-- Campos para quem JÁ É Cacau Lover -->
+                    <div id="loverExistenteFields" style="display: none; margin-top: 15px;">
+                        <input type="text" id="loverCpfExistente" class="form-input" placeholder="CPF *" maxlength="14" style="margin-bottom: 12px;">
+                    </div>
+                    
+                    <!-- Campos para quem QUER SER Cacau Lover -->
+                    <div id="loverNovoFields" style="display: none; margin-top: 15px;">
+                        <input type="text" id="loverCpfNovo" class="form-input" placeholder="CPF *" maxlength="14" style="margin-bottom: 12px;">
+                        <input type="email" id="loverEmail" class="form-input" placeholder="E-mail *" style="margin-bottom: 12px;">
+                        <input type="text" id="loverTelefone" class="form-input" placeholder="Telefone (DDD + Número) *" maxlength="15" style="margin-bottom: 12px;">
+                    </div>
+                </div>
+
                 <!-- FORMA DE PAGAMENTO -->
                 <div class="payment-section">
                     <h3>Forma de Pagamento:</h3>
@@ -1130,6 +1161,51 @@
             e.target.value = value;
         });
 
+        // CONTROLE CACAU LOVER - Mostrar/ocultar campos
+        document.querySelectorAll('input[name="cacauLover"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const loverExistenteFields = document.getElementById('loverExistenteFields');
+                const loverNovoFields = document.getElementById('loverNovoFields');
+                
+                // Ocultar todos os campos primeiro
+                loverExistenteFields.style.display = 'none';
+                loverNovoFields.style.display = 'none';
+                
+                // Mostrar campos apropriados
+                if (e.target.value === 'ja') {
+                    loverExistenteFields.style.display = 'block';
+                } else if (e.target.value === 'quero') {
+                    loverNovoFields.style.display = 'block';
+                }
+            });
+        });
+
+        // Formatar CPF enquanto digita
+        function formatarCPF(input) {
+            input.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length <= 11) {
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                }
+                e.target.value = value;
+            });
+        }
+
+        formatarCPF(document.getElementById('loverCpfExistente'));
+        formatarCPF(document.getElementById('loverCpfNovo'));
+
+        // Formatar Telefone enquanto digita
+        document.getElementById('loverTelefone').addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+                value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+            }
+            e.target.value = value;
+        });
+
         // FINALIZAR PEDIDO
         document.getElementById('btnCheckout').addEventListener('click', () => {
             const clientType = document.querySelector('input[name="clientType"]:checked');
@@ -1167,6 +1243,36 @@
                 return;
             }
 
+            // Validar Cacau Lover
+            const cacauLoverOption = document.querySelector('input[name="cacauLover"]:checked');
+            let cacauLoverCpf = '';
+            let cacauLoverEmail = '';
+            let cacauLoverTelefone = '';
+            let cacauLoverStatus = '';
+
+            if (cacauLoverOption) {
+                if (cacauLoverOption.value === 'ja') {
+                    cacauLoverCpf = document.getElementById('loverCpfExistente').value.trim();
+                    if (!cacauLoverCpf) {
+                        alert('Por favor, informe seu CPF Cacau Lover!');
+                        return;
+                    }
+                    cacauLoverStatus = 'ja';
+                } else if (cacauLoverOption.value === 'quero') {
+                    cacauLoverCpf = document.getElementById('loverCpfNovo').value.trim();
+                    cacauLoverEmail = document.getElementById('loverEmail').value.trim();
+                    cacauLoverTelefone = document.getElementById('loverTelefone').value.trim();
+                    
+                    if (!cacauLoverCpf || !cacauLoverEmail || !cacauLoverTelefone) {
+                        alert('Por favor, preencha todos os dados para se tornar Cacau Lover!');
+                        return;
+                    }
+                    cacauLoverStatus = 'quero';
+                } else {
+                    cacauLoverStatus = 'nao';
+                }
+            }
+
             if (!paymentMethod) {
                 alert('Por favor, selecione uma forma de pagamento!');
                 return;
@@ -1193,7 +1299,19 @@
             let message = '*PEDIDO CHOCOFRIDAY* \n\n';
             message += `*Tipo de Cliente:* ${clientTypeLabel}\n`;
             message += `*Nome:* ${clientName}\n`;
-            message += `*Endereço de Entrega:*\n`;
+            
+            // CACAU LOVER
+            if (cacauLoverStatus === 'ja') {
+                message += `\n*Eu sou Cacau Lover, segue o meu CPF para registro:*\n`;
+                message += `   CPF: ${cacauLoverCpf}\n`;
+            } else if (cacauLoverStatus === 'quero') {
+                message += `\n*Quero ser um Cacau Lover, segue meus dados para cadastro:*\n`;
+                message += `   CPF: ${cacauLoverCpf}\n`;
+                message += `   E-mail: ${cacauLoverEmail}\n`;
+                message += `   Telefone: ${cacauLoverTelefone}\n`;
+            }
+            
+            message += `\n*Endereço de Entrega:*\n`;
             if (clientCep) message += `   CEP: ${clientCep}\n`;
             message += `   ${clientLogradouro}`;
             if (clientNumero) message += `, ${clientNumero}`;
@@ -1231,6 +1349,13 @@
             document.getElementById('clientBairro').value = '';
             document.getElementById('clientComplemento').value = '';
             document.getElementById('clientCidade').value = '';
+            document.getElementById('loverCpfExistente').value = '';
+            document.getElementById('loverCpfNovo').value = '';
+            document.getElementById('loverEmail').value = '';
+            document.getElementById('loverTelefone').value = '';
+            document.getElementById('naoQueroLover').checked = true;
+            document.getElementById('loverExistenteFields').style.display = 'none';
+            document.getElementById('loverNovoFields').style.display = 'none';
             document.querySelectorAll('input[name="payment"]').forEach(radio => radio.checked = false);
             
             showToast('Pedido enviado! Carrinho limpo com sucesso! ✅');
